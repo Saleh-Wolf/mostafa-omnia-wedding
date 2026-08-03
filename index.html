@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f2ea">
+  <meta property="og:title" content="دعوة زفاف Mostafa & Omnia">
+  <meta property="og:description" content="يسعدنا تشريفكم يوم 23 أغسطس 2026 الساعة 8 مساءً">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./assets/images/wedding-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>دعوة زفاف Mostafa & Omnia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --paper:#fbf8f2;
+      --paper2:#f2eadf;
+      --ink:#34454f;
+      --olive:#7a7450;
+      --rose:#cba9a4;
+      --sage:#a7ad91;
+      --gold:#9a8c59;
+      --shadow:0 30px 90px rgba(74,58,37,.22);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Tajawal",Tahoma,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 5%,rgba(203,169,164,.22),transparent 28%),
+        radial-gradient(circle at 90% 95%,rgba(167,173,145,.25),transparent 30%),
+        linear-gradient(135deg,#ede4d7,#fbf8f2 48%,#efe6da);
+      overflow-x:hidden;
+    }
+
+    .intro{
+      position:fixed;
+      inset:0;
+      z-index:20;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background:
+        radial-gradient(circle at 50% 25%,rgba(255,255,255,.7),transparent 34%),
+        linear-gradient(145deg,#efe6da,#fbf8f2);
+      transition:opacity .9s ease, visibility .9s ease;
+    }
+    .intro.hidden{opacity:0;visibility:hidden}
+
+    .envelope-wrap{
+      width:min(92vw,520px);
+      text-align:center;
+    }
+
+    .envelope{
+      position:relative;
+      width:100%;
+      aspect-ratio:1.5/1;
+      background:#ece1d3;
+      border:1px solid rgba(122,116,80,.28);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      cursor:pointer;
+      transform:translateY(0);
+      animation:float 3s ease-in-out infinite;
+    }
+
+    .envelope::before,
+    .envelope::after{
+      content:"";
+      position:absolute;
+      inset:auto;
+      width:74%;
+      height:130%;
+      background:#f5eee5;
+      top:8%;
+      border:1px solid rgba(122,116,80,.18);
+    }
+    .envelope::before{
+      left:-28%;
+      transform:rotate(34deg);
+    }
+    .envelope::after{
+      right:-28%;
+      transform:rotate(-34deg);
+    }
+
+    .flap{
+      position:absolute;
+      inset:0 0 auto;
+      height:63%;
+      background:#e8dccd;
+      clip-path:polygon(0 0,100% 0,50% 100%);
+      transform-origin:top;
+      transition:transform .8s ease;
+      z-index:4;
+      border-top:1px solid rgba(122,116,80,.2);
+    }
+
+    .seal{
+      position:absolute;
+      left:50%;
+      top:48%;
+      transform:translate(-50%,-50%);
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      background:linear-gradient(145deg,#a89455,#7c6f43);
+      color:#fff8e8;
+      display:grid;
+      place-items:center;
+      font-family:"Aref Ruqaa",serif;
+      font-size:26px;
+      z-index:6;
+      box-shadow:0 10px 22px rgba(89,72,39,.25), inset 0 0 0 5px rgba(255,255,255,.12);
+    }
+
+    .envelope.open .flap{transform:rotateX(180deg)}
+    .envelope.open{animation:none}
+
+    .intro h1{
+      margin:24px 0 6px;
+      color:var(--olive);
+      font-family:"Aref Ruqaa",serif;
+      font-size:clamp(34px,8vw,58px);
+      direction:ltr;
+    }
+    .intro p{margin:0;color:#6d7478;font-size:18px}
+    .open-btn{
+      margin-top:22px;
+      border:1px solid var(--olive);
+      background:var(--olive);
+      color:white;
+      min-height:50px;
+      padding:0 28px;
+      font-family:inherit;
+      font-weight:700;
+      font-size:17px;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(91,82,53,.16);
+    }
+
+    .page{
+      width:min(100%,780px);
+      min-height:100vh;
+      margin:auto;
+      position:relative;
+      overflow:hidden;
+      padding:76px 34px 46px;
+      background:
+        linear-gradient(rgba(255,255,255,.28),rgba(255,255,255,.28)),
+        repeating-linear-gradient(0deg,rgba(120,105,75,.025) 0 1px,transparent 1px 5px),
+        var(--paper);
+      box-shadow:var(--shadow);
+      isolation:isolate;
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity 1s ease .2s, transform 1s ease .2s;
+    }
+    body.ready .page{opacity:1;transform:none}
+
+    .page::before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border:1px solid rgba(139,129,91,.22);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .flower{
+      position:absolute;
+      width:250px;
+      height:250px;
+      opacity:.94;
+      pointer-events:none;
+      z-index:-1;
+      filter:drop-shadow(0 3px 5px rgba(78,69,48,.08));
+    }
+    .tl{top:-56px;left:-48px}
+    .tr{top:-58px;right:-50px;transform:scaleX(-1)}
+    .bl{bottom:-67px;left:-55px;transform:scaleY(-1)}
+    .br{bottom:-68px;right:-55px;transform:scale(-1)}
+
+    .petal{
+      position:fixed;
+      top:-30px;
+      width:12px;
+      height:18px;
+      border-radius:70% 30% 70% 30%;
+      background:rgba(203,169,164,.62);
+      z-index:10;
+      pointer-events:none;
+      animation:fall linear forwards;
+    }
+
+    .bismillah{
+      margin:0 auto 18px;
+      color:var(--olive);
+      font-family:"Aref Ruqaa",serif;
+      font-size:clamp(32px,7vw,55px);
+      text-align:center;
+      line-height:1.45;
+    }
+    .eyebrow{
+      margin:0;
+      text-align:center;
+      font-size:clamp(17px,3.5vw,23px);
+    }
+    .names{
+      margin:15px 0 0;
+      text-align:center;
+      color:var(--olive);
+      font-family:"Aref Ruqaa",serif;
+      font-size:clamp(46px,11vw,80px);
+      line-height:1.08;
+      direction:ltr;
+    }
+    .names span{color:var(--rose);font-weight:400}
+
+    .ornament{
+      width:min(380px,82%);
+      margin:18px auto;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--gold);
+    }
+    .ornament::before,.ornament::after{
+      content:"";
+      height:1px;
+      flex:1;
+      background:linear-gradient(90deg,transparent,currentColor,transparent);
+    }
+    .ornament b{font-size:22px;font-weight:400}
+
+    .message{
+      max-width:600px;
+      margin:0 auto;
+      text-align:center;
+      font-size:clamp(17px,3.5vw,22px);
+      line-height:1.9;
+    }
+
+    .date-card{
+      width:min(540px,100%);
+      margin:24px auto 18px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:14px;
+      padding:19px 14px;
+      border-top:1px solid rgba(126,114,79,.34);
+      border-bottom:1px solid rgba(126,114,79,.34);
+    }
+    .side{text-align:center;font-size:clamp(19px,4vw,25px);font-weight:500}
+    .side small,.number small{display:block;margin-top:7px;font-size:14px;font-weight:400;color:#68727a}
+    .number{
+      min-width:100px;
+      text-align:center;
+      color:var(--olive);
+      font-size:clamp(46px,11vw,68px);
+      line-height:1;
+      font-weight:700;
+      border-inline:1px solid rgba(126,114,79,.26);
+    }
+
+    .countdown{
+      width:min(540px,100%);
+      margin:18px auto 25px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      direction:ltr;
+    }
+    .unit{
+      padding:12px 6px 9px;
+      text-align:center;
+      background:rgba(255,255,255,.56);
+      border:1px solid rgba(126,114,79,.17);
+      backdrop-filter:blur(5px);
+    }
+    .unit strong{display:block;color:var(--olive);font-size:clamp(22px,5vw,32px)}
+    .unit span{display:block;direction:rtl;margin-top:4px;font-size:13px}
+
+    .location{text-align:center;margin:3px auto 20px}
+    .pin{font-size:42px;color:var(--olive);line-height:1}
+    .location p{margin:8px 0 0;font-size:18px;line-height:1.7}
+
+    .actions{
+      width:min(560px,100%);
+      margin:24px auto 12px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .btn{
+      min-height:52px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 15px;
+      border:1px solid var(--olive);
+      background:var(--olive);
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+      transition:.2s ease;
+      box-shadow:0 8px 18px rgba(96,88,59,.14);
+    }
+    .btn.secondary{background:rgba(255,255,255,.62);color:var(--olive)}
+    .btn:hover{transform:translateY(-2px)}
+
+    footer{margin-top:24px;text-align:center;color:#7a7e7e;font-size:14px}
+
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+    @keyframes fall{
+      to{transform:translate3d(var(--drift),110vh,0) rotate(520deg);opacity:.12}
+    }
+
+    @media(max-width:540px){
+      .page{padding:67px 22px 36px;box-shadow:none}
+      .page::before{inset:10px}
+      .flower{width:195px;height:195px}
+      .tl{top:-40px;left:-45px}
+      .tr{top:-42px;right:-45px}
+      .bl{bottom:-48px;left:-48px}
+      .br{bottom:-50px;right:-48px}
+      .actions{grid-template-columns:1fr}
+      .date-card{gap:7px}
+      .number{min-width:78px}
+      .seal{width:62px;height:62px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *{animation:none!important;transition:none!important}
+    }
+  </style>
+</head>
+
+<body>
+  <section class="intro" id="intro">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope" aria-label="فتح الدعوة">
+        <div class="flap"></div>
+        <div class="seal">م & أ</div>
+      </div>
+      <h1>Mostafa & Omnia</h1>
+      <p>يسرّنا دعوتكم لمشاركتنا أجمل أيامنا</p>
+      <button class="open-btn" id="openBtn">افتح الدعوة</button>
+    </div>
+  </section>
+
+  <main class="page">
+    <svg class="flower tl" viewBox="0 0 260 260" aria-hidden="true">
+      <g fill="none" stroke="#727257" stroke-width="2.1" stroke-linecap="round">
+        <path d="M15 15 C72 44 91 78 121 128 C143 165 180 201 245 244"/>
+        <path d="M41 43 C28 62 26 78 35 98 M63 56 C77 37 93 28 111 29 M82 80 C55 86 43 102 39 122"/>
+      </g>
+      <g stroke="#696b55" stroke-width="1.8">
+        <ellipse cx="58" cy="55" rx="34" ry="18" fill="#e8d7d4" transform="rotate(-32 58 55)"/>
+        <ellipse cx="89" cy="34" rx="34" ry="17" fill="#f1eee0" transform="rotate(9 89 34)"/>
+        <ellipse cx="108" cy="64" rx="32" ry="18" fill="#f5f2e7" transform="rotate(58 108 64)"/>
+        <circle cx="82" cy="55" r="12" fill="#b6aa7f"/>
+        <ellipse cx="39" cy="111" rx="27" ry="12" fill="#a9ae8e" transform="rotate(-62 39 111)"/>
+        <ellipse cx="73" cy="105" rx="27" ry="12" fill="#c5c8a9" transform="rotate(-18 73 105)"/>
+        <ellipse cx="115" cy="116" rx="34" ry="17" fill="#f1ede0" transform="rotate(18 115 116)"/>
+        <ellipse cx="145" cy="131" rx="34" ry="17" fill="#eee9d8" transform="rotate(80 145 131)"/>
+        <ellipse cx="113" cy="151" rx="34" ry="17" fill="#f5f2e8" transform="rotate(143 113 151)"/>
+        <circle cx="127" cy="132" r="12" fill="#9d8a68"/>
+        <ellipse cx="164" cy="173" rx="25" ry="11" fill="#abb18e" transform="rotate(25 164 173)"/>
+        <ellipse cx="192" cy="190" rx="25" ry="11" fill="#c7c4a6" transform="rotate(70 192 190)"/>
+      </g>
+    </svg>
+    <svg class="flower tr" viewBox="0 0 260 260" aria-hidden="true"></svg>
+    <svg class="flower bl" viewBox="0 0 260 260" aria-hidden="true"></svg>
+    <svg class="flower br" viewBox="0 0 260 260" aria-hidden="true"></svg>
+
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</div>
+    <p class="eyebrow">نتشرف بدعوتكم لحضور حفل زفاف</p>
+
+    <h1 class="names">Mostafa <span>&</span> Omnia</h1>
+
+    <div class="ornament"><b>❀</b></div>
+
+    <p class="message">
+      لفرحتنا اليوم ندعوكم، وبالطيب والورد نلاقيكم،
+      وبالحب والخير نشكر تهانيكم.
+      حضوركم يسعدنا ويُكمل فرحتنا.
+    </p>
+
+    <section class="date-card">
+      <div class="side">الأحد<small>الساعة 8 مساءً</small></div>
+      <div class="number">23<small>أغسطس</small></div>
+      <div class="side">2026<small>بإذن الله</small></div>
+    </section>
+
+    <section class="countdown" aria-label="العد التنازلي">
+      <div class="unit"><strong id="days">00</strong><span>يوم</span></div>
+      <div class="unit"><strong id="hours">00</strong><span>ساعة</span></div>
+      <div class="unit"><strong id="minutes">00</strong><span>دقيقة</span></div>
+      <div class="unit"><strong id="seconds">00</strong><span>ثانية</span></div>
+    </section>
+
+    <section class="location">
+      <div class="pin">⌖</div>
+      <p>اضغط على زر الموقع لعرض مكان الحفل على الخريطة</p>
+    </section>
+
+    <div class="actions">
+      <a class="btn" href="https://maps.app.goo.gl/4WFpqZXPvzoCiHXi6?g_st=ac" target="_blank" rel="noopener">
+        فتح موقع القاعة
+      </a>
+      <a class="btn secondary" href="https://wa.me/201036711957?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%A4%D9%83%D8%AF%20%D8%AD%D8%B6%D9%88%D8%B1%D9%8A%20%D9%84%D8%AD%D9%81%D9%84%20%D8%B2%D9%81%D8%A7%D9%81%20Mostafa%20%26%20Omnia" target="_blank" rel="noopener">
+        تأكيد الحضور عبر واتساب
+      </a>
+    </div>
+
+    <div class="actions">
+      <a class="btn secondary" href="./mostafa-omnia-wedding.ics" download>إضافة الموعد إلى التقويم</a>
+      <button class="btn secondary" id="shareBtn" type="button">مشاركة الدعوة</button>
+    </div>
+
+    <footer>نسعد بتشريفكم ومشاركتكم أجمل لحظاتنا 🤍</footer>
+  </main>
+
+  <script>
+    const source = document.querySelector(".tl").innerHTML;
+    document.querySelector(".tr").innerHTML = source;
+    document.querySelector(".bl").innerHTML = source;
+    document.querySelector(".br").innerHTML = source;
+
+    const weddingDate = new Date("2026-08-23T20:00:00+03:00");
+
+    function updateCountdown(){
+      const diff = weddingDate.getTime() - Date.now();
+      const values = diff > 0
+        ? {
+            days: Math.floor(diff / 86400000),
+            hours: Math.floor((diff / 3600000) % 24),
+            minutes: Math.floor((diff / 60000) % 60),
+            seconds: Math.floor((diff / 1000) % 60)
+          }
+        : {days:0,hours:0,minutes:0,seconds:0};
+
+      Object.entries(values).forEach(([id,value])=>{
+        document.getElementById(id).textContent = String(value).padStart(2,"0");
+      });
+    }
+
+    function petals(){
+      for(let i=0;i<26;i++){
+        const petal=document.createElement("i");
+        petal.className="petal";
+        petal.style.left=Math.random()*100+"vw";
+        petal.style.animationDuration=(5+Math.random()*5)+"s";
+        petal.style.animationDelay=(Math.random()*1.5)+"s";
+        petal.style.setProperty("--drift",(Math.random()*180-90)+"px");
+        petal.style.transform=`rotate(${Math.random()*180}deg)`;
+        document.body.appendChild(petal);
+        setTimeout(()=>petal.remove(),11000);
+      }
+    }
+
+    function openInvitation(){
+      const envelope=document.getElementById("envelope");
+      envelope.classList.add("open");
+      petals();
+      setTimeout(()=>{
+        document.getElementById("intro").classList.add("hidden");
+        document.body.classList.add("ready");
+      },850);
+    }
+
+    document.getElementById("openBtn").addEventListener("click",openInvitation);
+    document.getElementById("envelope").addEventListener("click",openInvitation);
+
+    const shareBtn = document.getElementById("shareBtn");
+    shareBtn?.addEventListener("click", async () => {
+      const data = {
+        title: "دعوة زفاف Mostafa & Omnia",
+        text: "يسعدنا تشريفكم يوم 23 أغسطس 2026 الساعة 8 مساءً",
+        url: window.location.href
+      };
+      try {
+        if (navigator.share) await navigator.share(data);
+        else {
+          await navigator.clipboard.writeText(window.location.href);
+          shareBtn.textContent = "تم نسخ الرابط";
+          setTimeout(() => shareBtn.textContent = "مشاركة الدعوة", 1800);
+        }
+      } catch (_) {}
+    });
+
+    updateCountdown();
+    setInterval(updateCountdown,1000);
+  </script>
+</body>
+</html>

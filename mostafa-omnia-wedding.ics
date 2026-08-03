@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mostafa and Omnia Wedding//AR
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:mostafa-omnia-wedding-20260823@example.com
+DTSTAMP:20260803T094700Z
+DTSTART:20260823T180000Z
+DTEND:20260823T220000Z
+SUMMARY:حفل زفاف Mostafa & Omnia
+DESCRIPTION:يسعدنا تشريفكم في حفل زفاف Mostafa & Omnia
+LOCATION:https://maps.app.goo.gl/4WFpqZXPvzoCiHXi6?g_st=ac
+END:VEVENT
+END:VCALENDAR
