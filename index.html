@@ -519,6 +519,7 @@
     const musicBtn = document.getElementById("musicBtn");
     let invitationOpened = false;
     let fadeTimer;
+    let resumeAfterVisibility = false;
 
     function updateMusicButton(isPlaying){
       musicBtn.textContent = isPlaying ? "🔊" : "🔇";
@@ -533,10 +534,15 @@
       try {
         await music.play();
         updateMusicButton(true);
+        const fadeStartedAt = performance.now();
 
         fadeTimer = setInterval(()=>{
-          music.volume = Math.min(.25,music.volume+.02);
-          if(music.volume >= .25) clearInterval(fadeTimer);
+          const fadeInVolume = Math.min(.25,(performance.now()-fadeStartedAt)/1300*.25);
+          const remaining = music.duration-music.currentTime;
+          const fadeOutVolume = Number.isFinite(remaining) && remaining <= 3
+            ? Math.max(0,remaining/3*.25)
+            : .25;
+          music.volume = Math.min(fadeInVolume,fadeOutVolume);
         },100);
       } catch (_){
         updateMusicButton(false);
@@ -570,17 +576,27 @@
       }
     });
 
-    music.addEventListener("timeupdate",()=>{
-      const remaining = music.duration - music.currentTime;
-      if(Number.isFinite(remaining) && remaining <= 2 && !music.paused){
+    music.addEventListener("ended",()=>{
+      clearInterval(fadeTimer);
+      music.currentTime = 0;
+      startMusic();
+    });
+
+    document.addEventListener("visibilitychange",()=>{
+      if(document.hidden){
+        resumeAfterVisibility = !music.paused;
         clearInterval(fadeTimer);
-        music.volume = Math.max(0,.25*(remaining/2));
+        music.pause();
+        updateMusicButton(false);
+      } else if(resumeAfterVisibility){
+        resumeAfterVisibility = false;
+        startMusic();
       }
     });
 
-    music.addEventListener("ended",()=>{
-      music.currentTime = 0;
-      startMusic();
+    window.addEventListener("pagehide",()=>{
+      clearInterval(fadeTimer);
+      music.pause();
     });
 
     const shareBtn = document.getElementById("shareBtn");
