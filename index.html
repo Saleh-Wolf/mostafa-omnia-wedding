@@ -321,6 +321,24 @@
 
     footer{margin-top:24px;text-align:center;color:#7a7e7e;font-size:14px}
 
+    .music-control{
+      position:fixed;
+      left:18px;
+      bottom:18px;
+      z-index:15;
+      width:48px;
+      height:48px;
+      padding:0;
+      border:1px solid var(--olive);
+      border-radius:50%;
+      background:var(--olive);
+      color:white;
+      font-size:21px;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(96,88,59,.2);
+    }
+    .music-control[hidden]{display:none}
+
     @keyframes float{
       0%,100%{transform:translateY(0)}
       50%{transform:translateY(-8px)}
@@ -435,6 +453,11 @@
     <footer>نسعد بتشريفكم ومشاركتكم أجمل لحظاتنا 🤍</footer>
   </main>
 
+  <button class="music-control" id="musicBtn" type="button" aria-label="إيقاف الموسيقى" aria-pressed="true" hidden>🔊</button>
+  <audio id="bgMusic" preload="auto" loop>
+    <source src="./assets/audio/wedding-music.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const source = document.querySelector(".tl").innerHTML;
     document.querySelector(".tr").innerHTML = source;
@@ -473,9 +496,41 @@
       }
     }
 
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    let invitationOpened = false;
+    let fadeTimer;
+
+    function updateMusicButton(isPlaying){
+      musicBtn.textContent = isPlaying ? "🔊" : "🔇";
+      musicBtn.setAttribute("aria-label", isPlaying ? "إيقاف الموسيقى" : "تشغيل الموسيقى");
+      musicBtn.setAttribute("aria-pressed", String(isPlaying));
+    }
+
+    async function startMusic(){
+      clearInterval(fadeTimer);
+      music.volume = 0;
+
+      try {
+        await music.play();
+        updateMusicButton(true);
+
+        fadeTimer = setInterval(()=>{
+          music.volume = Math.min(.25,music.volume+.02);
+          if(music.volume >= .25) clearInterval(fadeTimer);
+        },100);
+      } catch (_){
+        updateMusicButton(false);
+      }
+    }
+
     function openInvitation(){
+      if(invitationOpened) return;
+      invitationOpened = true;
       const envelope=document.getElementById("envelope");
       envelope.classList.add("open");
+      musicBtn.hidden = false;
+      startMusic();
       petals();
       setTimeout(()=>{
         document.getElementById("intro").classList.add("hidden");
@@ -485,6 +540,16 @@
 
     document.getElementById("openBtn").addEventListener("click",openInvitation);
     document.getElementById("envelope").addEventListener("click",openInvitation);
+
+    musicBtn.addEventListener("click",async ()=>{
+      if(music.paused){
+        await startMusic();
+      } else {
+        clearInterval(fadeTimer);
+        music.pause();
+        updateMusicButton(false);
+      }
+    });
 
     const shareBtn = document.getElementById("shareBtn");
     shareBtn?.addEventListener("click", async () => {
