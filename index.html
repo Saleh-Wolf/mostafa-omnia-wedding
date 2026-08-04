@@ -120,8 +120,20 @@
       font-family:"Aref Ruqaa",serif;
       font-size:26px;
       z-index:6;
+      overflow:hidden;
       box-shadow:0 10px 22px rgba(89,72,39,.25), inset 0 0 0 5px rgba(255,255,255,.12);
     }
+
+    .seal::after{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:linear-gradient(110deg,transparent 28%,rgba(255,248,220,.8) 48%,transparent 68%);
+      transform:translateX(-130%);
+      pointer-events:none;
+    }
+
+    .envelope.open .seal::after{animation:seal-shine .75s ease-out}
 
     .envelope.open .flap{transform:rotateX(180deg)}
     .envelope.open{animation:none}
@@ -223,8 +235,12 @@
       font-size:clamp(46px,11vw,80px);
       line-height:1.08;
       direction:ltr;
+      opacity:0;
+      transform:translateY(16px) scale(.98);
+      transition:opacity .8s ease .65s,transform .8s ease .65s;
     }
     .names span{color:var(--rose);font-weight:400}
+    body.ready .names{opacity:1;transform:none}
 
     .ornament{
       width:min(380px,82%);
@@ -345,6 +361,9 @@
     }
     @keyframes fall{
       to{transform:translate3d(var(--drift),110vh,0) rotate(520deg);opacity:.12}
+    }
+    @keyframes seal-shine{
+      to{transform:translateX(130%)}
     }
 
     @media(max-width:540px){
